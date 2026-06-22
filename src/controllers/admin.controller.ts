@@ -13,7 +13,7 @@ import { AppError } from "../middleware/error.middleware";
 const parsePositiveInt = (
   value: unknown,
   defaultValue: number,
-  maxValue?: number
+  maxValue?: number,
 ) => {
   const parsed = Number(value);
 
@@ -46,7 +46,7 @@ const getSearchQuery = (value: unknown) => {
 
 const isValidEnumValue = <T extends Record<string, string>>(
   enumObject: T,
-  value: unknown
+  value: unknown,
 ): value is T[keyof T] => {
   return typeof value === "string" && Object.values(enumObject).includes(value);
 };
@@ -75,7 +75,7 @@ const createPaginationMeta = (page: number, limit: number, total: number) => {
 export const getAdminDashboard = async (
   _req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const [
@@ -129,17 +129,26 @@ export const getAdminDashboard = async (
         _count: {
           status: true,
         },
+        orderBy: {
+          status: "asc",
+        },
       }),
       prisma.store.groupBy({
         by: ["status"],
         _count: {
           status: true,
         },
+        orderBy: {
+          status: "asc",
+        },
       }),
       prisma.product.groupBy({
         by: ["status"],
         _count: {
           status: true,
+        },
+        orderBy: {
+          status: "asc",
         },
       }),
       prisma.order.findMany({
@@ -228,7 +237,7 @@ export const getAdminDashboard = async (
 export const getAllUsers = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { page, limit, skip } = getPagination(req);
@@ -315,7 +324,7 @@ export const getAllUsers = async (
 export const getUserById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const userId = getIdParam(req.params.id, "User ID");
@@ -383,7 +392,7 @@ export const getUserById = async (
 export const updateUserRole = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const userId = getIdParam(req.params.id, "User ID");
@@ -451,7 +460,7 @@ export const updateUserRole = async (
 export const deleteUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const userId = getIdParam(req.params.id, "User ID");
@@ -504,7 +513,7 @@ export const deleteUser = async (
 export const getAllStoresForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { page, limit, skip } = getPagination(req);
@@ -582,7 +591,7 @@ export const getAllStoresForAdmin = async (
 export const updateStoreStatus = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const storeId = getIdParam(req.params.id, "Store ID");
@@ -634,7 +643,7 @@ export const updateStoreStatus = async (
 export const getAllProductsForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { page, limit, skip } = getPagination(req);
@@ -728,7 +737,7 @@ export const getAllProductsForAdmin = async (
 export const updateProductStatus = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const productId = getIdParam(req.params.id, "Product ID");
@@ -786,7 +795,7 @@ export const updateProductStatus = async (
 export const getAllOrdersForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { page, limit, skip } = getPagination(req);
@@ -868,7 +877,7 @@ export const getAllOrdersForAdmin = async (
 export const getOrderDetailForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const orderId = getIdParam(req.params.id, "Order ID");
@@ -942,7 +951,7 @@ export const getOrderDetailForAdmin = async (
 export const getAllProductReviewsForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { page, limit, skip } = getPagination(req);
@@ -1009,7 +1018,7 @@ export const getAllProductReviewsForAdmin = async (
 export const deleteProductReviewForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const reviewId = getIdParam(req.params.id, "Review ID");
@@ -1042,7 +1051,7 @@ export const deleteProductReviewForAdmin = async (
 export const getAllApplicationReviewsForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { page, limit, skip } = getPagination(req);
@@ -1091,7 +1100,7 @@ export const getAllApplicationReviewsForAdmin = async (
 export const deleteApplicationReviewForAdmin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const reviewId = getIdParam(req.params.id, "Application Review ID");
